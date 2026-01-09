@@ -27,7 +27,32 @@ export default async () => {
   });
 
   // BEGIN (write your solution here)
+  app.get("/users/new", (req, res) => {
+  return res.view("src/views/users/new");
+});
 
+app.post("/users", (req, res) => {
+  const { username, email, password } = req.body;
+  
+  const passwordConfirm = req.body.passwordConfirm;
+  if (passwordConfirm && password !== passwordConfirm) {
+    return res.status(422).send("Passwords do not match");
+  }
+  
+  const normalizedUsername = (username || '').trim();
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  
+  const newUser = {
+    id: generateId(),
+    username: normalizedUsername,
+    email: normalizedEmail,
+    password: crypto(password || '')
+  };
+  
+  users.push(newUser);
+  
+  return res.redirect("/users");
+});
   // END
 
   app.get("/users/:id", (req, res) => {
