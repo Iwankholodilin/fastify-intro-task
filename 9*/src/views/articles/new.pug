@@ -1,0 +1,16 @@
+form(action="/articles" method="post")
+  div
+    label(for="title") Название
+    input(type="text" name="title" id="title" value=formData.title || '')
+    if errors
+      each error in errors
+        if error.field === 'title'
+          div.error= error.message
+  div
+    label(for="text") Текст
+    textarea(name="text" id="text")= formData.text || ''
+    if errors
+      each error in errors
+        if error.field === 'text'
+          div.error= error.message
+  input(type="submit" value="Создать")
