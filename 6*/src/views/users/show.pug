@@ -1,0 +1,14 @@
+extends ../layout/page.pug
+
+block content
+  h1 Пользователь: #{user.username}
+  
+  div
+    p 
+      strong Имя: 
+      | #{user.username}
+    p 
+      strong Email: 
+      | #{user.email}
+  
+  a(href="/users") Назад к списку пользователей
