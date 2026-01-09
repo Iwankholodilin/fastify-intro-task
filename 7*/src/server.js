@@ -13,7 +13,22 @@ export default async () => {
   app.get("/", (req, res) => res.view("src/views/index"));
 
   // BEGIN (write your solution here)
-
+  app.get("/users", (req, res) => {
+  const { term = '' } = req.query;
+  const searchTerm = term.toLowerCase();
+  
+  let filteredUsers = users;
+  if (searchTerm) {
+    filteredUsers = users.filter(user => 
+      user.username.toLowerCase().includes(searchTerm)
+    );
+  }
+  
+  return res.view("src/views/users/index", { 
+    users: filteredUsers, 
+    searchTerm: term 
+  });
+});
   // END
 
   app.get("/users/:id", (req, res) => {
